@@ -1,0 +1,8 @@
+{
+    "name": "binnovative-react-native-starter-kit",
+    "version": "0.0.1",
+    "description": "React Native starter kit using modern tools and best practices",
+    "repository": "git@github.com:beinnovative/binnovative-react-native-starter-kit.git",
+    "author": "Binova Gautam <binova1245@gmail.com>",
+    "license": "MIT"
+}

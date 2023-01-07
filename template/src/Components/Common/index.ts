@@ -1,0 +1,6 @@
+export {default as ImgIcon} from './ImgIcon'
+export {default as TabItem} from './TabItem'
+export * from './Seperators'
+export {default as CText} from './TextComp'
+export { default as EmptyComponent } from './EmptyComponent'
+export { default as FullScreenLoader } from './FullScreenLoader'
