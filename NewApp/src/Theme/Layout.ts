@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 import { ThemeVariables } from './theme'
 
-export default function ({}: ThemeVariables) {
+export default function () {
   return StyleSheet.create({
     /* Column Layouts */
     column: {
@@ -43,6 +43,13 @@ export default function ({}: ThemeVariables) {
       flexDirection: 'row',
       alignItems: 'center',
     },
+    wrap: {
+      flexWrap: 'wrap',
+    },
+    rowBaseline: {
+      flexDirection: 'row',
+      alignItems: 'baseline',
+    },
     /* Default Layouts */
     center: {
       alignItems: 'center',
@@ -66,10 +73,10 @@ export default function ({}: ThemeVariables) {
     justifyContentBetween: {
       justifyContent: 'space-between',
     },
-    scrollDefault:{
+    scrollDefault: {
       flexGrow: 1,
-       paddingHorizontal : 15,
-    }, 
+      paddingHorizontal: 15,
+    },
     scrollSpaceAround: {
       flexGrow: 1,
       justifyContent: 'space-around',
@@ -105,5 +112,7 @@ export default function ({}: ThemeVariables) {
     rotate90Inverse: {
       transform: [{ rotate: '-90deg' }],
     },
+
+    /* Position Layout */
   })
 }

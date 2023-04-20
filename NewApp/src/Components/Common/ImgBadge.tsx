@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useMemo } from 'react'
-import { Cardwrapper } from '../Wrappers'
+import { Cardwrapper, GradientCard } from '../Wrappers'
 import { useTheme } from '@/Hooks'
 import { MetricsSizes } from '@/Theme/Variables'
 import { CText } from '.'
@@ -11,15 +11,16 @@ type Props = {
     image ?: any,
     factor ?: number,
     borderWidth ?: number,
+    elevated ?: boolean,
 }
 
 
 
-const ImgBadge = ({size = 100, variant = 'logo' , image , factor = 0.6,borderWidth = 2}: Props) => {
+const ImgBadge = ({size = 100, variant = 'logo' , image , factor = 0.6,borderWidth = 2 , elevated}: Props) => {
     const {Images} = useTheme()
 
-    const BADGE_DIM = useMemo(() => size || MetricsSizes.small * 10 , [size])
-    const ImgSource = useMemo(() =>  Images.logo , [variant])
+    const BADGE_DIM = useMemo(() => size || MetricsSizes.SMALL * 10 , [size])
+    const ImgSource = useMemo(() =>  image ||  Images.brandLogo , [variant, image])
     const FACTCOR = useMemo(() => variant === 'logo' ? 0.5  : variant === 'profile' ? 1:  factor, [variant])
 
     const styles = useMemo(() => StyleSheet.create({
@@ -37,7 +38,7 @@ const ImgBadge = ({size = 100, variant = 'logo' , image , factor = 0.6,borderWid
     })
         , [BADGE_DIM, FACTCOR])
   return (
-      <Cardwrapper  style={styles.container}>
+      <Cardwrapper elevated={elevated} style={styles.container}>
           <Image source={ImgSource} style={styles.img} />
       </Cardwrapper>
   )

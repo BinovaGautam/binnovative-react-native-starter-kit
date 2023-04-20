@@ -4,7 +4,7 @@ import { useTheme } from '@/Hooks'
 import { Colors } from '@/Theme/Variables'
 
 type Props = {
-    children ?: (string | Element)[] | string | string[],
+    children ?: React.ReactNode,
     style ? : any,
     as ?: string,
     size ?: number,
@@ -16,7 +16,7 @@ const TextComp = ({children,as,style,size,color,align}: Props) => {
     const {Fonts} = useTheme()
     as = as || 'p'
   return (
-   <Text style={[Fonts?.[as],{color : color || Colors.font},size && {fontSize : size},align && {textAlign : align} ,style]} >
+   <Text style={[Fonts?.[as],{color : color || Colors.font,letterSpacing:1.1},size && {fontSize : size},align && {textAlign : align} ,style]} >
     {children}
    </Text>
   )

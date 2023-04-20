@@ -1,5 +1,6 @@
 import {Colors, FontFamily, FontSize} from '@/Theme/Variables';
 import {ReactNode} from 'react';
+// import Toast from 'react-native-toast-notifications';
 
 export const getInitials = (name: string) => {
   const names = name.split(' ');
@@ -7,6 +8,32 @@ export const getInitials = (name: string) => {
   return initials;
 };
 
+export const handleSuccess = (response: any) => {
+  try {
+    console.log('BASE RESPONSE FROM BEFORE HANDLE SUCCESS ');
+    let {msg, status, data} = response || {};
+
+    if (!!msg && Object.keys(response)?.length === 1) {
+      //for auth routes only response looks like : {msg : 'otp sent to xxxxxx'}
+      return {success: true, message: msg};
+    }
+
+    // success case for app APIs
+    if (!!status && status === 'success') {
+      return {success: true, data: data || {}};
+    }
+
+    // success case for lean APIs
+    if (!!status && status === 200) {
+      return {success: true, data: data || {}};
+    }
+    
+    return response;
+  } catch (e) {
+    console.log('BASE ERROR FROM HANDLE SUCCESS', e, response);
+    return {success: false, message: 'Something went wrong', error: e};
+  }
+};
 
 export const getAlertObj = (
   variant: string,

@@ -1,7 +1,17 @@
-import { ActivityIndicator, Pressable, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { Colors } from '@/Theme/Variables'
-import { CText } from '../Common'
+import {
+  ActivityIndicator,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacityProps,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {ReactNode, useMemo} from 'react';
+import {Colors, MetricsSizes} from '@/Theme/Variables';
+import {CText} from '../Common';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
+import {DEFAULT_OPACITY} from '@/Utils';
 
 type Props = {
   onPress?: () => void;
@@ -14,8 +24,12 @@ type Props = {
   loadingSize?: number;
   loadingStyle?: any;
   txtStyle?: any;
-  txtColors   ?: any
+  txtColors?: any;
   secondary?: boolean;
+  elevated?: boolean;
+  as?: string;
+  size?: number;
+  LeftComp?: ReactNode;
 };
 
 const PrimaryButton = ({
@@ -27,44 +41,61 @@ const PrimaryButton = ({
   loadingText,
   txtStyle,
   txtColors,
-  secondary
-}: Props) => {
-  let TextColor = secondary ? Colors.primary : Colors.white
+  secondary,
+  elevated,
+  as = 'pmdMed',
+  size = MetricsSizes.LARGE * 2,
+  LeftComp,
+}: Props & TouchableOpacityProps) => {
+  let TextColor = secondary ? Colors.PRIMARY : Colors.white;
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        btn: {
+          backgroundColor: Colors.PRIMARY,
+          borderRadius: MetricsSizes.SMALL,
+          paddingHorizontal: MetricsSizes.SMALL,
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: size,
+          flexDirection: 'row',
+        },
+        btnSecondary: {
+          backgroundColor: 'transparent',
+          borderWidth: 1,
+          borderColor: Colors.PRIMARY,
+          elevation: 0,
+        },
+        elevated: {
+          shadowOffset: {width: 0, height: 2},
+          shadowColor: Colors?.primary,
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 4,
+        },
+      }),
+    [],
+  );
   return (
-    <Pressable
+    <TouchableOpacity
+      activeOpacity={DEFAULT_OPACITY}
       onPress={onPress}
       disabled={disabled || loading}
-      style={[styles.btn, style, secondary && styles.btnSecondary]}>
-      <CText as="h5"  style={[txtStyle]} color={txtColors ||TextColor}>
+      style={[
+        styles.btn,
+        style,
+        secondary && styles.btnSecondary,
+        elevated && styles.elevated,
+        disabled && {opacity: 0.8},
+      ]}>
+      {LeftComp && LeftComp}
+      <CText as={as} style={[txtStyle]} color={txtColors || TextColor}>
         {loading ? loadingText || title : title}{' '}
       </CText>
       {loading && <ActivityIndicator size={20} color={Colors.white} />}
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
-export default PrimaryButton
-
-const styles = StyleSheet.create({
-    btn: {
-        backgroundColor:  Colors.primary,
-        borderRadius: 5,
-        padding: 10,
-        margin: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        height : 50,
-        flexDirection: 'row',
-    },
-    btnSecondary: {
-        backgroundColor:'transparent',
-        borderWidth: 1,
-        borderColor: Colors.primary,
-    },
-    
-    btnTxt : {
-        color: '#fff',
-        fontSize: 16,
-    }
-
-})
+export default PrimaryButton;

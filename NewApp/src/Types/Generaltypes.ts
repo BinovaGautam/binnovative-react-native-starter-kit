@@ -1,4 +1,4 @@
-import { IPlayerDashBoard } from "@/ApiServices";
+
 
 export type IconType =
 	| 'Ionicons'
@@ -49,5 +49,4 @@ export type GeneralReducerProps = {
 	alertObj: AlertProps | null;
 	imagesObj: any | null;
 	isLoading ?: boolean;
-	dashData ?: IPlayerDashBoard;
 }

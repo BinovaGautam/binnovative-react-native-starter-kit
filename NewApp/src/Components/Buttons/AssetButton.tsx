@@ -12,7 +12,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ElevatedButton from './ElevatedButton';
 import { useTheme } from '@/Hooks';
 import { MetricsSizes } from '@/Theme/Variables';
-import { CText } from '../Common';
+import { CText } from '@/Components';
 
 const {height, width , tiny , small ,regular} = MetricsSizes
 

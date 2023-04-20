@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, { useEffect } from 'react';
 import Cardwrapper from './Cardwrapper';
-import { Colors } from '@/Theme/Variables';
+import { Colors, MetricsSizes } from '@/Theme/Variables';
 import { CText } from '../Common';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 // import ElevatedWrapper from './ElevatedWrapper';
@@ -12,7 +12,6 @@ type Props = {
   label?: string;
   required?: boolean;
   parentStyle?: any;
-  noSign?: boolean;
 };
 
 const InputWrapper = ({
@@ -21,7 +20,6 @@ const InputWrapper = ({
   label,
   required,
   parentStyle,
-  noSign,
 }: Props) => {
   const yOffset =useSharedValue(30);
 
@@ -43,7 +41,7 @@ const InputWrapper = ({
         <Animated.View style={[animatedStyle]} >
           <CText as="pMed">
             {label}
-            {noSign ? <Text style={styles.required}>{required ? '*' : '  (Optional)'}</Text> : ""}
+            
           </CText>
         </Animated.View>
       )}
@@ -57,10 +55,8 @@ export default InputWrapper;
 
 const styles = StyleSheet.create({
   parent: {
-    // marginVertical: 5,
-    // flex: 1,
-    height :100,
-    marginHorizontal: 10,
+    marginVertical : MetricsSizes.SMALL,
+    overflow: 'hidden',
   },
   label: {
     fontSize: 14,
@@ -79,9 +75,10 @@ const styles = StyleSheet.create({
     fontWeight: '300',
   },
   inputContainer: {
-    height : 50,
-    borderRadius: 5,
-    borderWidth: 1,
+    height : MetricsSizes.XXLARGE,
+    borderRadius: MetricsSizes.SMALL,
+    // borderWidth: 1,
+    // backgroundColor: Colors.WHITE,
     borderColor: Colors.primary+'44', 
     justifyContent: 'center',
   }

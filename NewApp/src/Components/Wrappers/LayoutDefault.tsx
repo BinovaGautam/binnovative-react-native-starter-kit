@@ -1,94 +1,128 @@
-import { Dimensions, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect } from 'react'
-import { Colors, MetricsSizes } from '@/Theme/Variables'
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import { CText } from '../Common'
-
-const {width,height , small ,regular ,tiny} = MetricsSizes
+import {
+  Dimensions,
+  Image,
+  ImageBackground,
+  Platform,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useEffect} from 'react';
+import {Colors, MetricsSizes} from '@/Theme/Variables';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {useTheme} from '@/Hooks';
+import DefaultHeaderBg from '../Common/DefaultHeaderBg';
+// import {TopHeader, TopTabFragment} from '@/Fragments';
+import {VGap} from '../Common';
 
 type Props = {
-    children ?: React.ReactNode,
-    style ?: any,
-    height ?: number,
-    onBackPress ?: () => void,
-    backColor ?: string,
-    headerTitle ?: string,
-    statusBarColor ?: string,
-}
+  children?: React.ReactNode;
+  style?: any;
+  height?: number;
+  onBackPress?: () => void;
+  backColor?: string;
+  headerTitle?: string;
+  statusBarColor?: string;
+  noScroll?: boolean;
+  hideHeader?: boolean;
+  hideOptions ?: boolean,
+};
 
 //,height && {height : height}
 
-const LayoutDefault = ({children, style,height,onBackPress,backColor,headerTitle , statusBarColor}: Props) => {
-  const scale = useSharedValue(1)
+const LayoutDefault = ({
+  children,
+  style,
+  height,
+  onBackPress,
+  backColor,
+  headerTitle,
+  statusBarColor,
+  noScroll,
+  hideHeader,
+  hideOptions
+}: Props) => {
+  const {Colors, Images, Layout} = useTheme();
+  const scale = useSharedValue(1);
 
   const animationStyle = useAnimatedStyle(() => {
     return {
-      transform: [{
-        scale: withTiming(scale.value, {duration: 500})
-      }]
+      transform: [
+        {
+          scale: withTiming(scale.value, {duration: 500}),
+        },
+      ],
     };
   });
 
   useEffect(() => {
     // scale.value = withTiming(1, {duration: 1500});
   }, []);
-  return (
-    <Animated.View style={[styles.container, style,animationStyle]}>
-      <StatusBar backgroundColor={statusBarColor ||  Colors.primary} barStyle="dark-content" />
-      <View style={styles.inRow}>
-      {onBackPress && (
-        <TouchableOpacity onPress={onBackPress} style={styles.touchableIcon}>
-          <Ionicons name="chevron-back" size={30} color={backColor || Colors.white} />
-        </TouchableOpacity>
-      )}
-       {
-          headerTitle && 
-            <CText as="h4" style={{color: backColor || Colors.white, marginLeft : regular}} >{headerTitle}</CText>
-       }
 
+  const isIos = Platform.OS === 'ios';
+
+  return (
+    <Animated.View style={[styles.container, style, animationStyle]}>
+      <View style={[styles.FullContainer, style]}>
+        <StatusBar animated
+          backgroundColor={Colors.TRANSPARENT}
+          translucent
+          barStyle="dark-content"
+        />
+
+
+        
+        {/* {!hideHeader ? headerTitle ? (
+          <TopHeader
+            variant="light"
+            title={headerTitle}
+            onBackPress={onBackPress}
+          />
+        ) : (
+          <TopTabFragment hideOptions={hideOptions} />
+        ) : null
+        } */}
+        {noScroll ? (
+          children
+        ) : (
+          <ScrollView style={styles.ScrollContainer}>{children}</ScrollView>
+        )}
       </View>
-      {children}
     </Animated.View>
   );
-}
+};
 
-export default LayoutDefault
+export default LayoutDefault;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor:  Colors.primaryBg ,
+    backgroundColor: Colors.BRAND_COLOR,
     flex: 1,
   },
-  bgContent: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+  FullContainer: {
+    flex: 1,
+    // backgroundColor: Colors.SELECTION_SUCCESS,
   },
-  bgRect: {
-    height: 200,
+  ScrollContainer: {
+    flex: 1,
+  },
+  FooterContainer: {
+    height: 50,
+    justifyContent: 'center',
+  },
+  bgImg: {
     width: '100%',
-    backgroundColor: Colors.primary,
+    height: '100%',
+    position: 'absolute',
+    top: -50,
+    left: -10,
   },
-  triangleCorner: {
-    width: 0,
-    height: 0,
-    backgroundColor: 'transparent',
-    borderStyle: 'solid',
-    borderRightWidth: width,
-    borderTopWidth: 100,
-    borderRightColor: 'transparent',
-    borderTopColor: Colors.primary,
-  },
-    touchableIcon : {
-      
-        padding: 10,
-        zIndex : 1,
-    },
-    inRow : {
-        flexDirection : 'row',
-        alignItems : 'center',
-    }
 });

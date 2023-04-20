@@ -1,63 +1,74 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { ImageSourcePropType, Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Cardwrapper } from '../Wrappers'
-import { CText, ImgIcon } from '../Common'
+import { CText, IconComp, ImgIcon } from '../Common'
 import { useTheme } from '@/Hooks'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { MetricsSizes } from '@/Theme/Variables'
+import { IconType } from '@/Types/Generaltypes'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 type Props = {
-    imgIcon ?: any,
-    size ?: number,
-    onPress ?: () => void,
-    color ?: string,
-    rounded ?: boolean,
-    style ?: any
-    children ?: React.ReactNode
+  imgIcon?: ImageSourcePropType,
+  size?: number,
+  onPress?: () => void,
+  color?: string,
+  rounded?: boolean,
+  style?: any
+  children?: React.ReactNode,
+  iconName?: string
+  iconType?: IconType
+  iconSize?: number
 
 }
 
-const {small ,tiny} = MetricsSizes
-const DIM = small*5
+const { SMALL, TINY } = MetricsSizes
+const DIM = SMALL * 5
 
 
 const IconButton = ({
-    onPress,
-    imgIcon,
-    size,
-    color,
-    rounded,
-    style,
-    children,
+  onPress,
+  imgIcon,
+  size,
+  color,
+  rounded,
+  style,
+  children,
+  iconName,
+  iconType = 'Ionicons',
+  iconSize = DIM * 0.4
 }: Props) => {
-    const {Images,Colors} = useTheme()
+  const { Images, Colors } = useTheme()
   return (
-    <Pressable  onPress={onPress}>
-      <Cardwrapper elevated style={[styles.icon,style,size && {height : size , width :size , borderRadius : rounded ? size/2 : tiny }]}>
+    <TouchableOpacity onPress={onPress}>
+      <View style={[styles.icon, style, ]}>
         {
-        imgIcon ? (
-          <ImgIcon icon={imgIcon} size={size || 30} />
-        ) : (
-          <Ionicons
-            name={'ios-camera-outline'}
-            size={size || 25}
-            color={color || Colors.primary}
-          />
-        )}
-      </Cardwrapper>
-    </Pressable>
+          imgIcon ? (
+            <ImgIcon icon={imgIcon} size={size || 30} />
+          ) : (
+            <IconComp
+              type={iconType}
+              name={iconName || 'ios-camera-outline'}
+              size={iconSize}
+              color={color || Colors.primaryDark}
+            />
+          )}
+      </View>
+    </TouchableOpacity>
   );
 }
 
 export default IconButton
 
 const styles = StyleSheet.create({
-    icon : {
-        padding : small,
-        height : DIM,
-        width : DIM,
-        borderRadius : DIM/2,
-        justifyContent : 'center',
-        alignItems : 'center'
-    }
+  icon: {
+    padding: TINY,
+    height: DIM,
+    width: DIM,
+    borderRadius: DIM / 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    // borderWidth :0,
+  }
 })

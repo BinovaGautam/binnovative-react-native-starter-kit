@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SafeAreaView, StatusBar, Text, View } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { NavigationContainer } from '@react-navigation/native'
-import { LoginContainer, StartupContainer } from '@/Containers'
+import { ExampleContainer, LoginContainer, StartupContainer } from '@/Containers'
 import { useTheme } from '@/Hooks'
 import MainNavigator from './Main'
 import { navigationRef } from './utils'
 import { useSelector } from 'react-redux'
 import { FullScreenLoader } from '@/Components'
+import SplashScreen from 'react-native-splash-screen';
+
 
 const SomeComp = () => 
   <View style={{flex: 1, backgroundColor: 'blue', justifyContent: 'center'}}>
@@ -24,6 +26,10 @@ const ApplicationNavigator = () => {
   const { isLoggedIn, user } = useSelector((state: any) => state.auth)
   const { colors } = NavigationTheme
 
+  useEffect(() => {
+    SplashScreen.hide();
+  }, [])
+
 
   return (
     <SafeAreaView style={[Layout.fill, {backgroundColor: colors.card}]}>
@@ -31,7 +37,7 @@ const ApplicationNavigator = () => {
         <StatusBar barStyle={darkMode ? 'light-content' : 'dark-content'} />
         <Stack.Navigator screenOptions={{headerShown: false}}>
           <Stack.Group>
-            <Stack.Screen name="Startup" component={StartupContainer} />
+            <Stack.Screen name="Startup" component={ExampleContainer} />
             <Stack.Screen
               name="Main"
               component={isLoggedIn ? MainNavigator : LoginContainer}

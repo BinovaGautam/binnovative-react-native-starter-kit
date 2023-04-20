@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View,TouchableOpacity } from 'react-native'
 import React from 'react'
 import LayoutDefault from './LayoutDefault'
-// import LinearGradient from 'react-native-linear-gradient'
+import LinearGradient from 'react-native-linear-gradient'
 import { useTheme } from '@/Hooks'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
@@ -19,22 +19,17 @@ const GradientLayout = ({children,style,colors,onBackPress}: Props) => {
     let {Colors} = useTheme()
     let {primary,} = Colors
 
-    let gradientColors =colors ||  [primary, primary + '90'];
+    let gradientColors =colors ||  [Colors.PRIMARY,Colors.PINKISH_RED]
   return (
     <LayoutDefault>
-      {/* <LinearGradient
-        // start={{x: 4, y: 4}}
+      <LinearGradient
+        start={{x: 4, y: 4}}
         end={{x: 1, y: -4}}
         colors={gradientColors}
         style={[styles.gradient, style]}>
-            {
-                onBackPress && 
-                <TouchableOpacity onPress={onBackPress} style={styles.touchableIcon} >
-                    <Ionicons name="chevron-back" size={30} color={Colors.white} />
-                </TouchableOpacity>
-            }
+            
         {children}
-      </LinearGradient> */}
+      </LinearGradient>
     </LayoutDefault>
   );
 }

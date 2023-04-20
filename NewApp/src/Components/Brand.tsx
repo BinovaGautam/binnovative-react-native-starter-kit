@@ -13,7 +13,7 @@ const Brand = ({height, width, mode}: Props) => {
 
   return (
     <View style={{height, width}}>
-      <Image style={Layout.fullSize} source={Images.logo} resizeMode={mode} />
+      <Image style={Layout.fullSize} source={Images.brandLogo} resizeMode={mode} />
     </View>
   );
 };
