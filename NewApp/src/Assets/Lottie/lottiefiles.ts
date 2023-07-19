@@ -1,6 +1,0 @@
-export const Lottieloader = require('./loader.json')
-export const Lottieloader2 = require('./loader2.json')
-export const LottieScanner = require('./lottieScanner.json')
-export const LottiePaymentSuccess = require('./paymentsuccess.json')
-export const LottiePaymentFailed = require('./paymentFailed.json')
-export const LottieSendMoney = require('./LottieSend.json')
